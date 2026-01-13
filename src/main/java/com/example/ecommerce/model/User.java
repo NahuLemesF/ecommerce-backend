@@ -34,7 +34,7 @@ public class User {
     @NotBlank
     private String name;
 
-    @Email(message = "Email no valido")
+    @Email(message = "Email not valid")
     private String email;
 
     @NotBlank

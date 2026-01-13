@@ -18,22 +18,22 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserRequestDTO {
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
     private String name;
 
-    @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Ingrese un email válido")
+    @NotBlank(message = "Mail is required")
+    @Email(message = "Enter a valid email")
     private String email;
 
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, max = 100, message = "La contraseña debe tener entre 6 y 100 caracteres")
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
     private String password;
 
     private UserRole role;
 
     private String address;
 
-    @Pattern(regexp = "^\\d{7,15}$", message = "Ingrese un teléfono válido (solo números, 7-15 dígitos)")
+    @Pattern(regexp = "^\\d{7,15}$", message = "Phone number must be between 7 and 15 digits")
     private String phone;
 }

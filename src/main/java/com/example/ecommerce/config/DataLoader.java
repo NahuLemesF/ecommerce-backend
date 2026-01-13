@@ -1,7 +1,7 @@
 package com.example.ecommerce.config;
 
 import com.example.ecommerce.model.Product;
-import com.example.ecommerce.service.ProductServiceImpl;
+import com.example.ecommerce.service.product.ProductServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
