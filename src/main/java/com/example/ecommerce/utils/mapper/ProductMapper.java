@@ -4,8 +4,6 @@ import com.example.ecommerce.dto.product.ProductRequestDTO;
 import com.example.ecommerce.dto.product.ProductResponseDTO;
 import com.example.ecommerce.model.Product;
 
-import java.time.LocalDateTime;
-
 public class ProductMapper {
 
     public static Product toEntity (ProductRequestDTO dto) {
@@ -17,7 +15,6 @@ public class ProductMapper {
                 .price(dto.getPrice())
                 .stock(dto.getStock())
                 .imageUrl(dto.getImageUrl())
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 

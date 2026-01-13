@@ -1,4 +1,4 @@
-package com.example.ecommerce.service;
+package com.example.ecommerce.service.product;
 
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repository.IProductRepository;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements IProductService {
 
     private final IProductRepository productRepository;
 
@@ -33,8 +33,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product updateProduct(Long id, Product product) {
-        Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
         existingProduct.setName(product.getName());
         existingProduct.setDescription(product.getDescription());
@@ -47,6 +46,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new RuntimeException("Product not found");
+        }
         productRepository.deleteById(id);
     }
 }

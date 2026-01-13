@@ -1,11 +1,11 @@
-package com.example.ecommerce.service;
+package com.example.ecommerce.service.product;
 
 import com.example.ecommerce.model.Product;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductService {
+public interface IProductService {
 
     Product createProduct(Product product);
 

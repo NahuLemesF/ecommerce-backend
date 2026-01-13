@@ -3,10 +3,10 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.dto.product.ProductRequestDTO;
 import com.example.ecommerce.dto.product.ProductResponseDTO;
 import com.example.ecommerce.model.Product;
-import com.example.ecommerce.service.ProductServiceImpl;
+import com.example.ecommerce.service.product.IProductService;
 import com.example.ecommerce.utils.mapper.ProductMapper;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +21,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductServiceImpl productService;
-
-    @Autowired
-    public ProductController(ProductServiceImpl productService) {
-        this.productService = productService;
-    }
+    private final IProductService productService;
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO productRequest) {

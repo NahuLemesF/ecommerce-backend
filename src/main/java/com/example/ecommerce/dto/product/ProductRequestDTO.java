@@ -21,26 +21,26 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductRequestDTO {
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
     private String name;
 
-    @NotBlank(message = "Ingrese una descripción del producto")
-    @Size(min = 10, max = 500, message = "La descripción debe tener entre 10 y 500 caracteres")
+    @NotBlank(message = "Enter a valid description")
+    @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
     private String description;
 
-    @NotNull(message = "El precio es obligatorio")
-    @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than zero")
     private BigDecimal price;
 
-    @NotNull(message = "El stock es obligatorio")
-    @Min(value = 0, message = "El stock no puede ser negativo")
+    @NotNull(message = "Stock is required")
+    @Min(value = 0, message = "Stock cannot be negative")
     private Integer stock;
 
-    @NotBlank(message = "La imagen es obligatoria")
+    @NotBlank(message = "Image URL is required")
     @Pattern(
             regexp = "^(http|https)://.*$",
-            message = "Ingrese una URL válida"
+            message = "Enter a valid URL starting with http:// or https://"
     )
     private String imageUrl;
 }
