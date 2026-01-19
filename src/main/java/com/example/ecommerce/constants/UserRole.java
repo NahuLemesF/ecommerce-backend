@@ -1,6 +1,9 @@
 package com.example.ecommerce.constants;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 public enum UserRole {
     CLIENT("client"),

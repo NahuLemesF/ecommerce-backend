@@ -15,7 +15,7 @@ public class UserMapper {
                 .password(dto.getPassword())
                 .role(dto.getRole())
                 .address(dto.getAddress())
-                .phone(dto.getPhone() != null ? Integer.valueOf(dto.getPhone()) : null)
+                .phone(dto.getPhone())
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .role(user.getRole() != null ? user.getRole().getName() : null)
                 .address(user.getAddress())
-                .phone(user.getPhone() != null ? user.getPhone().toString() : null)
+                .phone(user.getPhone())
                 .build();
     }
 }

@@ -26,6 +26,7 @@ public class UserServiceImpl implements IUserService {
         if (user.getRole() == null) {
             user.setRole(UserRole.CLIENT);
         }
+
         return userRepository.save(user);
     }
 
@@ -45,7 +46,7 @@ public class UserServiceImpl implements IUserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!existingUser.getEmail().equals(user.getEmail())
-            && userRepository.existsByEmail(user.getEmail())) {
+                && userRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email already in use");
         }
 
@@ -61,7 +62,12 @@ public class UserServiceImpl implements IUserService {
         return userRepository.save(existingUser);
     }
 
+    @Override
     public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User not found");
+        }
         userRepository.deleteById(id);
     }
 }
+

@@ -7,6 +7,7 @@ import com.example.ecommerce.service.product.IProductService;
 import com.example.ecommerce.utils.mapper.ProductMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,8 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO productRequest) {
         Product entity = ProductMapper.toEntity(productRequest);
         Product saved = productService.createProduct(entity);
-        return ResponseEntity.ok(ProductMapper.toDto(saved));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ProductMapper.toDto(saved));
     }
 
     @GetMapping("/{id}")
@@ -53,21 +55,13 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO productRequest) {
         Product entity = ProductMapper.toEntity(productRequest);
-        try {
             Product updated = productService.updateProduct(id, entity);
             return ResponseEntity.ok(ProductMapper.toDto(updated));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        try {
             productService.deleteProduct(id);
             return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

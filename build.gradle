@@ -1,12 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-description = 'e-commerce project with Spring Boot'
 
 java {
     toolchain {
@@ -25,21 +24,13 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
 
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    // H2 in-memory DB
-    runtimeOnly 'com.h2database:h2'
-
-    // Swagger / Springdoc OpenAPI
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-
 }
-
 
 tasks.named('test') {
     useJUnitPlatform()

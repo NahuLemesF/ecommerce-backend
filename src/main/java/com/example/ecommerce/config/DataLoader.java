@@ -1,7 +1,10 @@
 package com.example.ecommerce.config;
 
+import com.example.ecommerce.constants.UserRole;
 import com.example.ecommerce.model.Product;
+import com.example.ecommerce.model.User;
 import com.example.ecommerce.service.product.ProductServiceImpl;
+import com.example.ecommerce.service.user.UserServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +15,13 @@ import java.math.BigDecimal;
 public class DataLoader {
 
     @Bean
-    CommandLineRunner loadData(ProductServiceImpl productService) {
+    CommandLineRunner loadData(
+            ProductServiceImpl productService,
+            UserServiceImpl userService
+    ) {
         return args -> {
+
+            // -------- PRODUCTS --------
             if (productService.getAllProducts().isEmpty()) {
 
                 productService.createProduct(Product.builder()
@@ -39,21 +47,36 @@ public class DataLoader {
                         .stock(5)
                         .imageUrl("https://example.com/images/auriculares.jpg")
                         .build());
+            }
 
-                productService.createProduct(Product.builder()
-                        .name("Mochila Urbana")
-                        .description("Mochila resistente para uso diario")
-                        .price(new BigDecimal("40.00"))
-                        .stock(8)
-                        .imageUrl("https://example.com/images/mochila.jpg")
+            // -------- USERS --------
+            if (userService.getAllUsers().isEmpty()) {
+
+                userService.createUser(User.builder()
+                        .name("Admin User")
+                        .email("admin@ecommerce.com")
+                        .password("admin123")
+                        .role(UserRole.ADMIN)
+                        .address("Admin Street 123")
+                        .phone("099123456")
                         .build());
 
-                productService.createProduct(Product.builder()
-                        .name("Taza Café")
-                        .description("Taza de cerámica con diseño divertido")
-                        .price(new BigDecimal("9.99"))
-                        .stock(50)
-                        .imageUrl("https://example.com/images/taza.jpg")
+                userService.createUser(User.builder()
+                        .name("John Doe")
+                        .email("john@ecommerce.com")
+                        .password("password123")
+                        .role(UserRole.CLIENT)
+                        .address("Main St 456")
+                        .phone("098111222")
+                        .build());
+
+                userService.createUser(User.builder()
+                        .name("Jane Smith")
+                        .email("jane@ecommerce.com")
+                        .password("password123")
+                        .role(UserRole.CLIENT)
+                        .address("Second Ave 789")
+                        .phone("097333444")
                         .build());
             }
         };
