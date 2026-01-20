@@ -1,11 +1,15 @@
 package com.example.ecommerce.service.order;
 
+import com.example.ecommerce.dto.order.OrderItemRequestDTO;
 import com.example.ecommerce.model.Order;
+import com.example.ecommerce.model.OrderItem;
+import com.example.ecommerce.model.Product;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repository.IOrderItemRepository;
 import com.example.ecommerce.repository.IOrderRepository;
 import com.example.ecommerce.repository.IProductRepository;
 import com.example.ecommerce.repository.IUserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,32 +30,58 @@ public class OrderServiceImpl implements IOrderService {
         this.productRepository = productRepository;
     }
 
+    @Transactional
     @Override
-    public Order createOrder(Order order) {
-        User user = userRepository.findById(order.getUser().getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Order createOrder(Long userId, List<OrderItemRequestDTO> items) {
 
-        if (order.getItems() == null || order.getItems().isEmpty()) {
-            throw new RuntimeException("Order must have at least one item");
+        if (userId == null) {
+            throw new IllegalArgumentException("userId cannot be null");
+        }
+        if (items == null || items.isEmpty()) {
+            throw new RuntimeException("Order must contain at least one item");
         }
 
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        Order order = new Order();
+        order.setUser(user);
 
+        for (OrderItemRequestDTO itemDTO : items) {
+            Product product = productRepository.findById(itemDTO.productId())
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
+
+            Integer requestedQuantity = itemDTO.quantity();
+            if (requestedQuantity > product.getStock()) {
+                throw new RuntimeException("Insufficient stock for product: " + product.getName());
+            }
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setProduct(product);
+            orderItem.setQuantity(requestedQuantity);
+            orderItem.setPriceAtPurchase(product.getPrice());
+            order.getItems().add(orderItem);
+
+            product.setStock(product.getStock() - requestedQuantity);
+        }
+        return orderRepository.save(order);
 
     }
 
     @Override
     public Optional<Order> getOrderById(Long id) {
-        return Optional.empty();
+        return orderRepository.findById(id);
     }
 
     @Override
     public List<Order> getAllOrders() {
-        return List.of();
+        return orderRepository.findAll();
     }
 
     @Override
     public List<Order> getOrderByUserId(Long userId) {
-        return List.of();
+        return orderRepository.findByUserId(userId);
+
     }
 }
