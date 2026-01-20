@@ -10,25 +10,25 @@ public class ProductMapper {
         if (dto == null) return null;
 
         return Product.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .price(dto.getPrice())
-                .stock(dto.getStock())
-                .imageUrl(dto.getImageUrl())
+                .name(dto.name())
+                .description(dto.description())
+                .price(dto.price())
+                .stock(dto.stock())
+                .imageUrl(dto.imageUrl())
                 .build();
     }
 
     public static ProductResponseDTO toDto(Product product) {
         if (product == null) return null;
 
-        return ProductResponseDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .stock(product.getStock())
-                .imageUrl(product.getImageUrl())
-                .createdAt(product.getCreatedAt())
-                .build();
+        return new ProductResponseDTO(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                product.getImageUrl(),
+                product.getCreatedAt()
+        );
     }
 }

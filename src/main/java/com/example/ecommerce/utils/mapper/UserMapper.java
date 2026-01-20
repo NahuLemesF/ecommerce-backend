@@ -10,25 +10,25 @@ public class UserMapper {
         if (dto == null) return null;
 
         return User.builder()
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .password(dto.getPassword())
-                .role(dto.getRole())
-                .address(dto.getAddress())
-                .phone(dto.getPhone())
+                .name(dto.name())
+                .email(dto.email())
+                .password(dto.password())
+                .role(dto.role())
+                .address(dto.address())
+                .phone(dto.phone())
                 .build();
     }
 
     public static UserResponseDTO toDto(User user) {
         if (user == null) return null;
 
-        return UserResponseDTO.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .role(user.getRole() != null ? user.getRole().getName() : null)
-                .address(user.getAddress())
-                .phone(user.getPhone())
-                .build();
+        return new UserResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole().getName(),
+                user.getAddress(),
+                user.getPhone()
+        );
     }
 }

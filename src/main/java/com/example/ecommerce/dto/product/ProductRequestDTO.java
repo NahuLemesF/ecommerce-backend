@@ -6,41 +6,31 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductRequestDTO {
+public record ProductRequestDTO(
+        @NotBlank(message = "Name is required")
+        @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
+        String name,
 
-    @NotBlank(message = "Name is required")
-    @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
-    private String name;
+        @NotBlank(message = "Enter a valid description")
+        @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
+        String description,
 
-    @NotBlank(message = "Enter a valid description")
-    @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
-    private String description;
+        @NotNull(message = "Price is required")
+        @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than zero")
+        BigDecimal price,
 
-    @NotNull(message = "Price is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than zero")
-    private BigDecimal price;
+        @NotNull(message = "Stock is required")
+        @Min(value = 0, message = "Stock cannot be negative")
+        Integer stock,
 
-    @NotNull(message = "Stock is required")
-    @Min(value = 0, message = "Stock cannot be negative")
-    private Integer stock;
-
-    @NotBlank(message = "Image URL is required")
-    @Pattern(
-            regexp = "^(http|https)://.*$",
-            message = "Enter a valid URL starting with http:// or https://"
-    )
-    private String imageUrl;
+        @NotBlank(message = "Image URL is required")
+        @Pattern(
+                regexp = "^(http|https)://.*$",
+                message = "Enter a valid URL starting with http:// or https://"
+        )
+        String imageUrl
+) {
 }
